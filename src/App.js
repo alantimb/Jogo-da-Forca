@@ -11,7 +11,7 @@ import forca5 from "./assets/forca5.png";
 import forca6 from "./assets/forca6.png";
 import palavras from "./palavras";
 import styled from "styled-components";
-import GlobalStyle from "./assets/globalStyles";
+import GlobalStyle from "./globalStyles";
 
 const images = [forca0, forca1, forca2, forca3, forca4, forca5, forca6];
 const alphabet = [
@@ -44,7 +44,8 @@ const alphabet = [
 ];
 
 function App() {
-  const [chosenWord, setChosenWord] = useState([]);
+  const [chosenWord, setChosenWord] = useState("");
+  const [chosenArrayWord, setChosenArrayWord] = useState([]);
   const [disableInput, setDisableInput] = useState(true);
   const [guess, setGuess] = useState("");
   const [hiddenWord, setHiddenWord] = useState([]);
@@ -65,7 +66,8 @@ function App() {
     const i = Math.floor(Math.random() * palavras.length);
     const word = palavras[i];
     const arrayWord = word.split("");
-    setChosenWord(arrayWord);
+    setChosenWord(word);
+    setChosenArrayWord(arrayWord);
 
     let underline = [];
     arrayWord.forEach((letter) => underline.push(" _"));
@@ -74,7 +76,7 @@ function App() {
 
   function clickedLetter(letter) {
     setUsedLetters([...usedLetters, letter]);
-    if (chosenWord.includes(letter)) {
+    if (chosenArrayWord.includes(letter)) {
       rightAnswer(letter);
     } else {
       wrongAnswer();
@@ -83,8 +85,8 @@ function App() {
 
   function rightAnswer(letter) {
     const newWord = [...hiddenWord];
-    chosenWord.forEach((lett, i) => {
-      if (chosenWord[i] === letter) {
+    chosenArrayWord.forEach((lett, i) => {
+      if (chosenArrayWord[i] === letter) {
         newWord[i] = letter;
       }
     });
@@ -107,7 +109,7 @@ function App() {
   }
 
   function guessWord() {
-    let attempt = chosenWord.join("");
+    let attempt = chosenArrayWord.join("");
     if (guess === attempt) {
       setWordColor("green");
     } else {
@@ -121,7 +123,7 @@ function App() {
     setUsedLetters(alphabet);
     setDisableInput(true);
     setGuess("");
-    setHiddenWord(chosenWord);
+    setHiddenWord(chosenArrayWord);
   }
 
   return (
@@ -129,6 +131,7 @@ function App() {
       <GlobalStyle />
       <MainContainer>
         <Jogo
+          chosenWord={chosenWord}
           images={images}
           hiddenWord={hiddenWord}
           mistakes={mistakes}

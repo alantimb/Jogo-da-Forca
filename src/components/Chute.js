@@ -8,11 +8,14 @@ function Chute(props) {
       <span>Já sei a palavra!</span>
       <input
         placeholder="Digite aqui seu chute"
+        data-test="guess-input"
         disabled={disableInput}
         value={guess}
         onChange={(e) => setGuess(e.target.value)}
       />
-      <button onClick={guessWord}>Chutar</button>
+      <button data-test="guess-button" onClick={guessWord}>
+        Chutar
+      </button>
     </Input>
   );
 }

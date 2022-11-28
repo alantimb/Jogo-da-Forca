@@ -8,6 +8,7 @@ function Letras(props) {
       {alphabet.map((letra) => (
         <button
           key={letra}
+          data-test="letter"
           onClick={() => clickedLetter(letra)}
           disabled={usedLetters.includes(letra)}
         >

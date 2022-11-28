@@ -1,13 +1,18 @@
 import styled from "styled-components";
 
 function Jogo(props) {
-  const { images, mistakes, startGame, wordColor, hiddenWord } = props;
+  const { chosenWord, images, mistakes, startGame, wordColor, hiddenWord } =
+    props;
 
   return (
     <Gallows>
-      <img src={images[mistakes]} alt="gallows' image" />
-      <button onClick={startGame}>Escolher palavra</button>
-      <MainWord color={wordColor}>{hiddenWord}</MainWord>
+      <img data-test="game-image" src={images[mistakes]} alt="gallows' image" />
+      <button data-test="choose-word" onClick={startGame}>
+        Escolher palavra
+      </button>
+      <MainWord data-test="word" data-answer={chosenWord} color={wordColor}>
+        {hiddenWord}
+      </MainWord>
     </Gallows>
   );
 }
