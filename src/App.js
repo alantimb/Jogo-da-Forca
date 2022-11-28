@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import Chute from "./Chute";
-import Jogo from "./Jogo";
-import Letras from "./Letras";
+import Chute from "./components/Chute";
+import Jogo from "./components/Jogo";
+import Letras from "./components/Letras";
 import forca0 from "./assets/forca0.png";
 import forca1 from "./assets/forca1.png";
 import forca2 from "./assets/forca2.png";
@@ -10,6 +10,8 @@ import forca4 from "./assets/forca4.png";
 import forca5 from "./assets/forca5.png";
 import forca6 from "./assets/forca6.png";
 import palavras from "./palavras";
+import styled from "styled-components";
+import GlobalStyle from "./assets/globalStyles";
 
 const images = [forca0, forca1, forca2, forca3, forca4, forca5, forca6];
 const alphabet = [
@@ -70,8 +72,6 @@ function App() {
     setHiddenWord(underline);
   }
 
-  console.log(chosenWord);
-
   function clickedLetter(letter) {
     setUsedLetters([...usedLetters, letter]);
     if (chosenWord.includes(letter)) {
@@ -90,7 +90,7 @@ function App() {
     });
     setHiddenWord(newWord);
 
-    if (!newWord.includes("_")) {
+    if (!newWord.includes(" _")) {
       setWordColor("green");
       finishGame();
     }
@@ -125,27 +125,40 @@ function App() {
   }
 
   return (
-    <div className="main-container">
-      <Jogo
-        images={images}
-        hiddenWord={hiddenWord}
-        mistakes={mistakes}
-        startGame={startGame}
-        wordColor={wordColor}
-      />
-      <Letras
-        alphabet={alphabet}
-        clickedLetter={clickedLetter}
-        usedLetters={usedLetters}
-      />
-      <Chute
-        disableInput={disableInput}
-        guess={guess}
-        guessWord={guessWord}
-        setGuess={setGuess}
-      />
-    </div>
+    <>
+      <GlobalStyle />
+      <MainContainer>
+        <Jogo
+          images={images}
+          hiddenWord={hiddenWord}
+          mistakes={mistakes}
+          startGame={startGame}
+          wordColor={wordColor}
+        />
+        <Letras
+          alphabet={alphabet}
+          clickedLetter={clickedLetter}
+          usedLetters={usedLetters}
+        />
+        <Chute
+          disableInput={disableInput}
+          guess={guess}
+          guessWord={guessWord}
+          setGuess={setGuess}
+        />
+      </MainContainer>
+    </>
   );
 }
 
 export default App;
+
+const MainContainer = styled.div`
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
